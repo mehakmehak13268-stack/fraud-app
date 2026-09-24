@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Batch upload{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Batch upload</h1>
+  <p>Upload a CSV of transactions to score them all at once. Required columns: amount, transaction_type, hour, distance_from_home_km, distance_from_last_txn_km, account_age_days, num_txns_last_24h, is_foreign, is_high_risk_merchant.</p>
+</div>
+
+<div class="panel">
+  <h2>Upload file</h2>
+  <label class="dropzone" id="dropzone">
+    <input type="file" id="file-input" accept=".csv">
+    <div id="dz-label">Drop a CSV here, or click to choose a file</div>
+    <div class="fname" id="fname"></div>
+  </label>
+  <div class="form-actions">
+    <button class="btn" id="upload-btn" disabled>Score transactions</button>
+    <span class="empty-note" id="loading-note" style="display:none;">Scoring file…</span>
+  </div>
+  <div class="error-box" id="error-box"></div>
+</div>
+
+<div class="panel" id="results-panel" style="display:none;">
+  <h2>Results</h2>
+  <div class="summary-strip">
+    <div class="summary-item"><div class="num" id="sum-rows">0</div><div class="lbl">transactions scored</div></div>
+    <div class="summary-item"><div class="num" id="sum-flagged">0</div><div class="lbl">flagged</div></div>
+    <div class="summary-item"><div class="num" id="sum-rate">0%</div><div class="lbl">flag rate</div></div>
+  </div>
+  <div class="form-actions" style="margin-top:0; margin-bottom:14px;">
+    <a class="btn btn-ghost" id="download-link" href="/batch/download">Download scored CSV</a>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr id="table-head"></tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+  <p class="empty-note" style="margin-top:10px;">Showing top 200 rows by fraud probability. Download the CSV for the full result set.</p>
+</div>
+
+<script src="{{ url_for('static', filename='js/batch.js') }}"></script>
+{% endblock %}

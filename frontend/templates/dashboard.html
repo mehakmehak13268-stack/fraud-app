@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Fraud overview</h1>
+  <p>Stats computed by scoring the sample transaction set with the current model.</p>
+</div>
+
+<div class="kpi-row">
+  <div class="kpi"><div class="lbl">Transactions</div><div class="val" id="kpi-total">–</div></div>
+  <div class="kpi"><div class="lbl">Flagged</div><div class="val" id="kpi-flagged">–</div></div>
+  <div class="kpi"><div class="lbl">Avg. amount</div><div class="val" id="kpi-avg">–</div></div>
+  <div class="kpi"><div class="lbl">Model ROC AUC</div><div class="val" id="kpi-auc">–</div></div>
+</div>
+
+<div class="charts-row">
+  <div class="panel">
+    <h2>Flag rate by hour</h2>
+    <canvas id="chart-hour" height="200"></canvas>
+  </div>
+  <div class="panel">
+    <h2>Flag rate by transaction type</h2>
+    <canvas id="chart-type" height="200"></canvas>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Flag rate by amount range</h2>
+  <canvas id="chart-amount" height="120"></canvas>
+</div>
+
+<script src="{{ url_for('static', filename='js/vendor/chart.umd.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

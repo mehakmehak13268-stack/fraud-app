@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Sentry{% endblock %} · Fraud Detection</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="icon" href="data:,">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidenav">
+    <div class="brand">
+      <span class="brand-mark">◆</span>
+      <span class="brand-name">Sentry</span>
+    </div>
+    <nav>
+      <a href="{{ url_for('index') }}" class="{{ 'is-active' if active=='single' }}">
+        <span class="nav-idx">01</span> Single check
+      </a>
+      <a href="{{ url_for('batch_page') }}" class="{{ 'is-active' if active=='batch' }}">
+        <span class="nav-idx">02</span> Batch upload
+      </a>
+      <a href="{{ url_for('dashboard') }}" class="{{ 'is-active' if active=='dashboard' }}">
+        <span class="nav-idx">03</span> Dashboard
+      </a>
+    </nav>
+    <div class="sidenav-foot">
+      <div class="status-dot"></div>
+      <span>Model online</span>
+    </div>
+  </aside>
+  <main class="content">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+</body>
+</html>

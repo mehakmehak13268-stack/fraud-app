@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Single check{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Check a transaction</h1>
+  <p>Enter transaction details to get a fraud probability from the trained model.</p>
+</div>
+
+<div class="panel">
+  <h2>Transaction details</h2>
+  <form id="check-form">
+    <div class="form-grid">
+      <div class="field">
+        <label for="amount">Amount ($)</label>
+        <input type="number" id="amount" step="0.01" min="0" value="120.00" required>
+      </div>
+      <div class="field">
+        <label for="transaction_type">Transaction type</label>
+        <select id="transaction_type">
+          <option value="purchase">Purchase</option>
+          <option value="withdrawal">Withdrawal</option>
+          <option value="transfer">Transfer</option>
+          <option value="online">Online</option>
+          <option value="refund">Refund</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="hour">Hour of day (0–23)</label>
+        <input type="number" id="hour" min="0" max="23" value="14" required>
+      </div>
+      <div class="field">
+        <label for="account_age_days">Account age (days)</label>
+        <input type="number" id="account_age_days" min="0" value="900" required>
+      </div>
+      <div class="field">
+        <label for="distance_from_home_km">Distance from home (km)</label>
+        <input type="number" id="distance_from_home_km" step="0.1" min="0" value="5" required>
+      </div>
+      <div class="field">
+        <label for="distance_from_last_txn_km">Distance from last transaction (km)</label>
+        <input type="number" id="distance_from_last_txn_km" step="0.1" min="0" value="2" required>
+      </div>
+      <div class="field">
+        <label for="num_txns_last_24h">Transactions in last 24h</label>
+        <input type="number" id="num_txns_last_24h" min="0" value="2" required>
+      </div>
+      <div class="field">
+        <label>&nbsp;</label>
+        <div class="checkbox-row"><input type="checkbox" id="is_foreign"> <span>Foreign transaction</span></div>
+        <div class="checkbox-row"><input type="checkbox" id="is_high_risk_merchant"> <span>High-risk merchant</span></div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn" id="submit-btn">Run check</button>
+      <span class="empty-note" id="loading-note" style="display:none;">Scoring…</span>
+    </div>
+  </form>
+
+  <div class="error-box" id="error-box"></div>
+
+  <div class="result" id="result">
+    <div class="result-head">
+      <div>
+        <div class="prob-value" id="prob-value">0%</div>
+        <div class="empty-note">fraud probability</div>
+      </div>
+      <span class="risk-pill low" id="risk-pill">low risk</span>
+    </div>
+    <div class="meter"><div class="meter-fill" id="meter-fill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/single.js') }}"></script>
+{% endblock %}
